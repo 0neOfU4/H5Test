@@ -1,0 +1,30 @@
+<title>GM操作-监控管理</title>
+<div class="row">
+  <h2 class="col-md-12 text-center">监控历史</h2>
+</div>
+<br>
+
+<div ng-repeat="x in vm.custom" style="text-align: center">
+  <label>{{x.name}}</label>
+  <table class="table table-striped table-bordered small">
+    <thead>
+    <tr>
+      <th>时间</th>
+      <th>结果</th>
+      <th>备注</th>
+      <th>报警阈值</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr style="background: {{ vm.eval(r.value+(x.comparetype=='='?'==':x.comparetype)+x.value)? 'red': '' }}" ng-repeat="r in x.history">
+      <td  ng-repeat="(k, v) in r">
+        {{v}}
+      </td>
+      <td>
+        {{x.comparetype + x.value}}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

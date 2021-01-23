@@ -1,0 +1,63 @@
+<title>GM操作-监控管理</title>
+<div class="row">
+  <h2 class="col-md-12 text-center">监控管理</h2>
+</div>
+<br>
+
+
+<div style="margin-bottom: 20px">
+  <input placeholder="筛选" ng-model="vm.filter" class="form-control">
+</div>
+<div class="panel panel-primary" ng-repeat="x in vm.custom | filter: vm.filter " style="margin-top: -15px">
+  <div class="panel-heading" ng-click="vm.switch_buttons(x)">
+    <div class="pull-left" style="color:{{x.enabled&&vm.globalenabled?'#fff':'#9f9f9f'}}">
+      {{x.name}} {{x.enabled&&vm.globalenabled?'':'（已禁用）'}}
+    </div>
+    <div class="text-right" style="height: 18px;">
+      <span ng-show="x.$$showbutton == 1">
+        <button ng-disabled="vm.loading" ng-click="vm.moveup(vm.custom, x)" class="btn btn-sm btn-success" style="margin-top: -5px">↑</button>
+        <button ng-disabled="vm.loading" ng-click="vm.movedown(vm.custom, x)" class="btn btn-sm btn-success" style="margin-top: -5px">↓</button>
+        <button ng-disabled="vm.loading" ng-click="vm.add(x)" class="btn btn-sm btn-success" style="margin-top: -5px">创建副本</button>
+        <button ng-disabled="vm.loading" ng-click="vm.remove(x)"class="btn btn-sm btn-danger" style="margin-top: -5px">删除</button>
+      </span>
+    </div>
+
+  </div>
+  <div class="panel-body" ng-show="x.$$showbutton == 1">
+    <label>标题</label>
+    <input type="text" ng-model="x.name" class="form-control">
+    <label>变量名（日志用，每项不能重复)</label>
+    <input type="text" ng-model="x.varname" class="form-control">
+    <label style="margin-top: 10px">是否启用: <input title="启用" type="checkbox" ng-model="x.enabled"></input> </label><br>
+    <label>SQL</label>
+    <textarea style="height: {{((x.sql+'222').split('\n').length) * 20 + 30}}px" cols="150" rows="15" ng-model="x.sql" class="form-control" style="font-size: smaller"></textarea>
+    <label style="margin-top: 10px">检测间隔</label>
+    <div>每 <input type="number" ng-model="x.interval"></input> 分钟检测一次，不足1分钟按1分钟</div>
+    <label style="margin-top: 10px">报警条件</label>
+    <div>
+      满足：返回值
+      <select ng-model="x.comparetype" ng-options="v for v in vm.comparetype"></select>
+      <input type="number" ng-model="x.value"></input>
+      连续
+      <input type="number" ng-model="x.times"></input>
+      次
+    </div>
+    <label style="margin-top: 10px">自定义报警网址(不填则使用默认报警网址)：</label>
+    <input type="text" class="form-control" ng-model="x.mailurl"></input>
+  </div>
+</div>
+
+<p class="" style="margin-top: 10px">
+<label>默认报警网址：</label>
+  <input type="text" class="form-control" ng-model="vm.mailurl"></input>
+  <label>全局开关：</label>
+  <input title="启用" type="checkbox" ng-model="vm.globalenabled"></input>
+</p>
+<p class="text-right" style="margin-top: 10px">
+  <button ng-disabled="vm.loading" ng-click="vm.newitem()" class="btn btn-primary">新增</button>
+  <button ng-disabled="vm.loading" ng-click="vm.save()" class="btn btn-primary">保存</button>
+</p>
+
+
+
+

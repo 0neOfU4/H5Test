@@ -1,0 +1,111 @@
+<style>
+
+  a, a:focus, a:hover {
+    text-decoration: none;
+    color: #555;
+  }
+
+  .menu_title {
+    border-style: solid;
+    border-width: 3px;
+    text-align: center;
+    font-size: 16px;
+    width: 150px;
+    height: 35px;
+    padding: 5px
+  }
+
+  .menu_item {
+    margin-bottom: -1px;
+    padding: 3px;
+    padding-left: 6px;
+    width: 150px;
+    height: 28px;
+    border: solid 1px #dddddd;
+    white-space : nowrap;
+    display: block;
+    cursor: pointer;
+  }
+
+  .menu_item_sub {
+    padding: 6px;
+    padding-left: 26px;
+  }
+
+  .menu_selected
+  {
+    background-color: #dc7575;
+  }
+
+  .menu_hidebtn{
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    margin-left: 0px;
+    z-index: 888;
+    cursor: pointer;
+  }
+
+</style>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<div class="container-fluid">
+  <div style="background-color: rgba(0, 0, 0, 0.17);" ng-show="$root.loading" class="mask-loading">
+    <div class="loading-icon"></div>
+  </div>
+  <div style="padding: 5px">
+    <div id="menu" style="width:{{vm.menuWidth}}px; position: fixed; margin-right: 10px; min-height:100%;overflow:auto; height: auto;">
+      <div class="list-group">
+        <div class="list-group-item1 text-center"  style="width:150px;">用户:{{$root.userName}}</div>
+
+        <div ng-if="$root.userName!='kefu'">
+          <a class="list-group-item active menu_title">运营数据</a>
+          <div ng-repeat="x in vm.custom">
+            <div ng-if="vm.isleaf(x)">
+              <a ng-href="#!/main/custom/{{x[0]}}" class="menu_item {{vm.getclass(x)}}">{{x[0]}}</a>
+            </div>
+            <div ng-if="!vm.isleaf(x)">
+              <div class="menu_item" ng-click="vm.clicknode(x)">
+                <span ng-if="!vm.isopen(x)" class="glyphicon glyphicon-folder-close"></span>
+                <span ng-if="vm.isopen(x)" class="glyphicon glyphicon-folder-open"></span>
+                {{x.pre}}({{x.data.length}})
+              </div>
+              <div ng-repeat="xx in x.data" ng-if="vm.isopen(x)" >
+                <a ng-href="#!/main/custom/{{xx[0]}}" class="menu_item menu_item_sub {{vm.getclass(xx)}}">{{xx[0].split(">")[1]}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="$root.userName=='admin'">
+          <a class="list-group-item active" style="border-style: solid; border-width:3px;text-align:center;font-size:16px;width:150px;height: 35px; padding:5px">监控数据</a>
+          <a href="#!/main/monitor" class="menu_item {{vm.getclass(['monitor'])}}" >监控历史</a>
+          <a class="list-group-item active menu_title">系统操作</a>
+          <a href="#!/main/custommgr" class="menu_item {{vm.getclass(['custommgr'])}}">报表管理</a>
+          <a href="#!/main/monitormgr" class="menu_item {{vm.getclass(['monitormgr'])}}">监控管理</a>
+        </div>
+		<div ng-if="$root.userName!='shareit'">
+			<a class="list-group-item active menu_title">GM操作</a>
+			<a href="#!/main/systemmail/1/0" class="menu_item {{vm.getclass(['/systemmail/'])}}">全服邮件</a>
+			<a href="#!/main/systemnotice" class="menu_item {{vm.getclass(['systemnotice'])}}">发跑马灯</a>
+			<a href="#!/main/player" class="menu_item {{vm.getclass(['player'])}}">玩家查询</a>
+			<a href="#!/main/blocklogin" class="menu_item {{vm.getclass(['blocklogin'])}}">批量封号</a>
+		</div>
+        <a class="list-group-item active menu_title">个人信息</a>
+        <a href="#!/main/repass"class="menu_item {{vm.getclass(['repass'])}}">修改密码</a>
+        <a href="#" class="list-group-item menu_item" ng-click="vm.logout()" >退出登陆</a>
+        <br>
+      </div>
+    </div>
+    <table width="100%"><tr><td width="{{vm.menuWidth}}"><div style="width: {{vm.menuWidth}}px"></div></td><td>
+      <div class="menu_hidebtn" ng-click="vm.hidemenu()">
+        <span ng-show="vm.menuWidth==165" class="glyphicon glyphicon-chevron-left"></span>
+        <span ng-hide="vm.menuWidth==165" class="glyphicon glyphicon-chevron-right"></span>
+      </div>
+      <div id="txt" style="width: 100%; padding-right: 15px; overflow:auto;">
+        <table width="100%"><tr><td>
+        <div id="uiview" ui-view=""></div>
+        </td><td>&nbsp;</td></tr></table>
+      </div>
+    </td></tr></table>
+  </div>
+</div>

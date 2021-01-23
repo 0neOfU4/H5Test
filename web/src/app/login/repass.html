@@ -1,0 +1,18 @@
+<title>个人信息-修改密码</title>
+<div class="row">
+  <h2 class="col-md-12 text-center">修改密码</h2>
+</div>
+<br>
+
+<div class="container" style="width: 400px">
+  <label class="">旧密码</label>
+  <input type="password" ng-model="vm.oldpass"  class="form-control" style="margin-bottom: 10px"/>
+
+  <label class="">新密码</label>
+  <input type="password" ng-model="vm.newpass"  class="form-control" style="margin-bottom: 10px"/>
+
+  <label class="">重复</label>
+  <input type="password" ng-model="vm.newpass2"  class="form-control" style="margin-bottom: 10px"/>
+
+  <button type="submit" ng-disabled="vm.oldpass=='' || vm.newpass == '' || vm.newpass2 != vm.newpass" ng-click="vm.repass()" class="btn btn-lg btn-primary btn-block">修改密码</button>
+</div>

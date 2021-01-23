@@ -1,0 +1,1 @@
+{"1":{"sz_name__s":"ServerList","sz_addr":"http://127.0.0.1/api/BSLocal.txt","id":1}}

@@ -1,0 +1,16 @@
+<?php
+$dbhost="localhost";
+$dbuser="root";
+$dbpwd="12345678";
+$dbport="3306";
+
+$dblog="dts_log";
+$dbserverlog="gx_serverlog";
+$dbgm="dts_gm";
+
+$login_server = "http://127.0.0.1:10014";
+$login_server_key = "lequ7788";
+
+$conn = mysqli_connect($dbhost, $dbuser, $dbpwd, $dblog, $dbport);
+if (!$conn) 
+    die ("对不起，发生错误！ 请检查conn.php中数据库的配置是否正确！".mysqli_connect_errno());  

@@ -1,0 +1,136 @@
+<title>运营数据-{{vm.select[0]}}</title>
+<style>
+  .zancun {
+    position: absolute;
+    right:5px;
+    padding: 10px;
+    background: #c4dfb9;
+    z-index: 10;
+    border-radius: 4px;
+    opacity: 0.2;
+    /*-webkit-user-select: none;*/
+  }
+  .zancun:hover{
+    opacity: 1;
+  }
+
+  .zancun .remove {
+    margin-left: 10px;
+    float: right;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+
+  .zancun_add {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+    background: #d7d7d7;
+    padding-left: 3px;
+    /*position: static;*/
+    right: 5px;
+    float: left;
+    margin-top: -24px;
+    cursor: pointer;
+  }
+
+  .zancun_add_gray {
+    opacity: 0.5;
+  }
+
+  .zancun_small_button {
+    width: 38px;
+    height: 22px;
+    size: 9px;
+    padding-left: 2px;
+    padding-top: 0px
+  }
+
+</style>
+<div class="zancun" ng-if="vm.query_history.length>0 || !vm.current_check">
+  <div style="text-align: center"><b>结果集</b></div>
+  <hr style="margin: 5px">
+  <div>
+    <label><input type="checkbox" ng-click="vm.mergeQuery()" ng-model="vm.current_check" />当前</label>
+  </div>
+  <hr style="margin: 5px">
+  <div>
+    <button ng-click="vm.autoSelect(1)" class="btn btn-primary zancun_small_button">全选</button>
+    <button ng-click="vm.autoSelect(0)" class="btn btn-primary zancun_small_button">反选</button>
+  </div>
+  <div ng-repeat="x in vm.query_history">
+    <label><input type="checkbox" ng-click="vm.mergeQuery()" ng-model="x.check" />{{x.name}}</label>
+    <span ng-click="vm.removeQuery(x)" class="remove glyphicon glyphicon-remove"></span>
+    <span ng-click="vm.renameQuery(x)" class="remove glyphicon glyphicon-edit"></span>
+  </div>
+</div>
+<div class="row">
+  <h4 class="col-md-12 text-center">{{vm.select[0]}}</h4>
+</div>
+<br>
+<form class="form-horizontal" ng-show="vm.select[2].length>0 || vm.select[4] != true">
+  <div class="form-group" style="margin-left: 5px; margin-right: 5px; margin-top: -20px; max-width: 1500px">
+    <div ng-repeat="x in vm.select[2]" class="col-sm-4" style="margin-top:5px">
+      <div ng-hide="x.hide">
+        <label class="col-sm-3 control-label">{{x.name}}</label>
+        <div class="col-sm-9">
+          <div ng-disabled="!vm.getready(x)" ng-if="x.type=='多选'"
+               ng-dropdown-multiselect=""
+               options="x.options"
+               selected-model="x.input"
+               translation-texts="vm.stringTranslate"
+               extra-settings="vm.stringSettings">
+          </div>
+
+          <input  ng-disabled="!vm.getready(x)" ng-if="x.type=='日期'" type="text" datepicker onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" ng-model="x.input" ng-change="vm.onchange(x)" ng-init="x.input=vm.defaultDate" class="Wdate form-control" style="max-width1:320px;">
+          <input  ng-disabled="!vm.getready(x)" ng-if="x.type=='日期范围'" type="text" ng-model="x.input" class="form-control date-picker" style="max-width1:320px;" date-range-picker>
+          <input  ng-disabled="!vm.getready(x)" ng-if="x.type=='数字'" type="number" ng-init="x.input=0" ng-change="vm.onchange(x)" ng-model="x.input" class="form-control" style="max-width1:320px;" >
+          <input  ng-disabled="!vm.getready(x)" ng-if="x.type=='文本'" type="text" ng-init="x.input=''" ng-change="vm.onchange(x)" ng-model="x.input" class="form-control" style="max-width1:320px;" >
+          <select ng-disabled="!vm.getready(x)" ng-if="x.type=='选项'" ng-model="x.input" ng-change="vm.onchange(x)" ng-init="x.input=x.options[0]" ng-options="x[0] for x in x.options" class="form-control"></select>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 text-center">
+      <button ng-disabled="vm.querying" ng-click="vm.query()" class="btn btn-primary" style="margin-top: 10px">
+        查询{{vm.querying?"中...":""}}
+      </button>
+    </div>
+  </div>
+</form>
+
+<div id="data_table" style="margin-top: -10px;padding-right: 10px">
+  <br>
+  <div ng-if="vm.table_data.length>0" ng-click="vm.onClickCopy()" class="zancun_add" title="复制到剪切板"
+  style="background: url(img/copy.png); background-repeat: no-repeat; background-size: 15px 15px; background-position: center; background-color: #d7d7d7"
+  ></div>
+  <div ng-if="vm.table_data.length>0" ng-click="vm.onSaveHistory()" class="zancun_add" title="添加到结果集对比" ng-class="{zancun_add_gray:vm.isSaved()}" style="margin-left: 23px"><span class="glyphicon glyphicon-plus"></span></div>
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th ng-repeat="(k, v) in vm.table_data[0]" ng-click="vm.onclick(k)">
+        <div title="{{vm.col_show[k].split('|')[1]}}" ng-if="vm.col_show[k].indexOf('HTML:') != 0">
+          <span ng-show="k!=vm.colname && k!=vm.colname2" class="glyphicon">&nbsp;</span>
+          <span ng-show="k==vm.colname && !vm.desc" class="glyphicon glyphicon-arrow-up"></span>
+          <span ng-show="k==vm.colname && vm.desc" class="glyphicon glyphicon-arrow-down"></span>
+          <span ng-show="k==vm.colname2 && !vm.desc2" class="glyphicon glyphicon-arrow-up" style="color: #b6b6b6"></span>
+          <span ng-show="k==vm.colname2 && vm.desc2" class="glyphicon glyphicon-arrow-down" style="color: #b6b6b6"></span>
+          <nobr ng-bind="vm.col_show[k].split('|')[0]"></nobr>
+        </div>
+        <p title="{{vm.col_show[k].split('|')[1]}}" ng-if="vm.col_show[k].indexOf('HTML:') == 0" ng-bind-html="vm.col_show[k].split('|')[0].substr(5) | trust" style="margin: 0px;padding: 0px"></p>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="r in vm.table_data | orderBy:vm.sortfunc2:vm.desc2 | orderBy:vm.sortfunc:vm.desc" style="{{vm.getResultSetBg(r, $index)}}">
+      <td ng-repeat="(k, v) in r">
+        <div ng-if="v.indexOf('HTML:') != 0" ng-bind="v"></div>
+        <div ng-if="v.indexOf('HTML:') == 0" ng-bind-html="v.substr(5) | trust"></div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+

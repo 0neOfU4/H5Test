@@ -1,0 +1,20 @@
+<div class="panel panel-default" style="margin-left:20px;margin-right:20px"><div class="panel-body">
+  <div class="modal-header">
+    <label>批量封号</label>
+  </div>
+  <div class="modal-body">
+    <div>
+      <label>pid(多个pid,隔开)：</label>
+      <textarea cols="78" rows="6" value="" class="input form-control1" ng-model="vm.pid" style="width: 100%"></textarea><br>
+
+      <label>封多长时间(单位秒)：</label>
+      <input type="text" value="" class="input form-control" ng-model="vm.tm"><br>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" ng-disabled="vm.pid==''" ng-click="vm.batchBlockLogin(vm.pid,vm.tm, 0)">封号</button>
+    <button class="btn btn-success" ng-disabled="vm.pid==''" ng-click="vm.batchBlockLogin(vm.pid,vm.tm, 1)">封设备</button>
+  </div>
+</div></div>
+

@@ -1,0 +1,23 @@
+﻿[
+{ "id": 1, "url": "http://127.0.0.1:10014",          "name": "localhost",    "status": 1,    "starttime": 0 },
+{ "id": 2, "url": "http://192.168.2.91:10014",       "name": "2区-谭伟坚",   "status": 1,    "starttime": 0 },
+{ "id": 3, "url": "http://192.168.2.253:10014",      "name": "3区-周萌",     "status": 1,    "starttime": 0 },
+{ "id": 4, "url": "http://192.168.2.126:10014",      "name": "4区-peiyifan", "status": 1,    "starttime": 0 },
+{ "id": 5, "url": "http://192.168.2.113:10014",      "name": "5区-yaoyufen", "status": 1,    "starttime": 0 },
+{ "id": 7, "url": "http://192.168.2.125:10014",      "name": "7区-张鹏宇",   "status": 1,    "starttime": 0 },
+{ "id": 8, "url": "http://192.168.2.100:10014",      "name": "8区-谢朝轩",      "status": 1,    "starttime": 0 },
+{ "id": 9, "url": "http://192.168.2.78:10014",       "name": "9区-lihongyi", "status": 1,    "starttime": 0 },
+{ "id": 10,"url": "http://192.168.2.193:10014",      "name": "10区-张健",  "status": 1,    "starttime": 0 },
+{ "id": 11,"url": "http://192.168.2.239:10014",      "name": "11区-邓邦宇",  "status": 1,    "starttime": 0 },
+{ "id": 17,"url": "http://192.168.2.171:10014",      "name": "17区-吴忠鑫",  "status": 1,    "starttime": 0 },
+{ "id": 18,"url": "http://192.168.2.15:10014",       "name": "18区-刘勇波",  "status": 1,    "starttime": 0 },
+{ "id": 19,"url": "http://192.168.2.231:10014",      "name": "19区-唐剑濠",  "status": 1,    "starttime": 0 },
+{ "id": 23,"url": "http://192.168.2.77:10014",       "name": "23区-刘勇",    "status": 1,    "starttime": 0 },
+{ "id": 25,"url": "http://192.168.2.131:10014",      "name": "25区-王伟",    "status": 1,    "starttime": 0 },
+{ "id": 31,"url": "http://192.168.2.33:10014",       "name": "31区-大师",    "status": 1,    "starttime": 0 },
+{ "id": 34,"url": "http://192.168.2.173:10014",      "name": "34区-崔伟",    "status": 1,    "starttime": 0 },
+{ "id": 36,"url": "http://192.168.2.85:10014",      "name": "36区-表哥",    "status": 1,    "starttime": 0 },
+{ "id": 37,"url": "http://192.168.2.33:10014",      "name": "39区-林俊峰",  "status": 1,    "starttime": 0 },
+{ "id": 99,"url": "http://192.168.1.15:10014",        "name": "99区-DTS内网","status": 1,    "starttime": 0 },
+{ "id": 1001,"url": "http://cls-8vrb4ras-dts-lo.gz.1251329502.clb.myqcloud.com:10014",        "name": "dts-docker","status": 1,    "starttime": 0 }
+]
